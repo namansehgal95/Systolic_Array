@@ -162,7 +162,7 @@ begin
     #12500
     //Activation Load and check begins
 
-    p_file = $fopen("psum.txt", "r");
+    p_file = $fopen("output.txt", "r");
 
     // Following three lines are to remove the first three comment lines of the file
     p_scan_file = $fscanf(p_file,"%s", captured_data);
