@@ -343,8 +343,8 @@ begin
             if (SFU_VALID[i] == 1'b1)
             begin
                 //sfu_reg[pointer_sfu[i]][16*(i+1)-1 : 16*i] = $signed(sfu_reg[pointer_sfu[i]][16*(i+1)-1: 16*i]) +  $signed(ARRAY_OUT[16*(i+1)-1:16*i]);
-                sfu_reg[i][pointer_sfu[i]] = sfu_reg[i][pointer_sfu[i]] + ARRAY_OUT[16*(i+1)-1:16*i];
-                pointer_sfu[i] = pointer_sfu[i] + 1'b1;
+                sfu_reg[i][pointer_sfu[i]] <= #1 sfu_reg[i][pointer_sfu[i]] + $signed(ARRAY_OUT[16*(i+1)-1:16*i]);
+                pointer_sfu[i] <= #1 pointer_sfu[i] + 1'b1;
             end
         end
     end
@@ -630,7 +630,27 @@ assign sfu_reg_7_13 = sfu_reg[7][13];
 assign sfu_reg_7_14 = sfu_reg[7][14];
 assign sfu_reg_7_15 = sfu_reg[7][15];
 
-    assign  O_D     =   {sfu_reg[7][counter], sfu_reg[6][counter], sfu_reg[5][counter], sfu_reg[4][counter], sfu_reg[3][counter], sfu_reg[2][counter], sfu_reg[1][counter], sfu_reg[0][counter]};
+    //assign  O_D     =   {sfu_reg[7][counter], sfu_reg[6][counter], sfu_reg[5][counter], sfu_reg[4][counter], sfu_reg[3][counter], sfu_reg[2][counter], sfu_reg[1][counter], sfu_reg[0][counter]};
+
+    wire signed [15:0] sfu_reg_0;
+    wire signed [15:0] sfu_reg_1;
+    wire signed [15:0] sfu_reg_2;
+    wire signed [15:0] sfu_reg_3;
+    wire signed [15:0] sfu_reg_4;
+    wire signed [15:0] sfu_reg_5;
+    wire signed [15:0] sfu_reg_6;
+    wire signed [15:0] sfu_reg_7;
+
+    assign sfu_reg_0 = (sfu_reg[0][counter][15])?('d0):(sfu_reg[0][counter]);
+    assign sfu_reg_1 = (sfu_reg[1][counter][15])?('d0):(sfu_reg[1][counter]);
+    assign sfu_reg_2 = (sfu_reg[2][counter][15])?('d0):(sfu_reg[2][counter]);
+    assign sfu_reg_3 = (sfu_reg[3][counter][15])?('d0):(sfu_reg[3][counter]);
+    assign sfu_reg_4 = (sfu_reg[4][counter][15])?('d0):(sfu_reg[4][counter]);
+    assign sfu_reg_5 = (sfu_reg[5][counter][15])?('d0):(sfu_reg[5][counter]);
+    assign sfu_reg_6 = (sfu_reg[6][counter][15])?('d0):(sfu_reg[6][counter]);
+    assign sfu_reg_7 = (sfu_reg[7][counter][15])?('d0):(sfu_reg[7][counter]); 
+
+    assign  O_D     =   {sfu_reg_7, sfu_reg_6, sfu_reg_5, sfu_reg_4, sfu_reg_3, sfu_reg_2, sfu_reg_1, sfu_reg_0};
     assign  O_ADDR  =   counter;
     assign  O_CEN   =   (state!=RET_OUT);
     assign  O_WEN   =   (state!=RET_OUT);
