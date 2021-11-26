@@ -131,6 +131,7 @@ mac_array #(
         write_next      = 'b0;
         read_next       = 'b0;
         kij_next        = kij;
+	reset_mac       = 'b0;
         case(state)
             IDLE:   
                 if(start)
@@ -334,9 +335,9 @@ begin
     begin
         if (reset)
         begin
-            pointer_sfu[i]  = 'd0;
+	    pointer_sfu[i]  <= 'd0;
 	    for(j=0 ; j<16 ; j=j+1)
-            sfu_reg[i][j]  = 'd0;
+	        sfu_reg[i][j]  <= 'd0;
         end
         else 
         begin
