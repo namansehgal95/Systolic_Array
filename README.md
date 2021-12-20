@@ -1,6 +1,7 @@
 # Systolic_Array
 
-Created a Systolic Array and its controller. 
+Created a Systolic Array and its controller which utilises it in a weight stationary fashion. 
+Combined activation and data FIFOs to a single unit (represented as L0 in diagram) for ease of implementation
 
 System Description
 
